@@ -1,0 +1,25 @@
+version: "3.5"
+services:
+  go-server:
+    build:
+      context: backend/
+    image: lilagames-backend
+    container_name: lilagames-backend
+    environment:
+      - PORT=${BACKEND_PORT}
+      - MONGODB_URIL=${MONGODB_URI}
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+  database:
+    image: mongo:6.0.5
+    ports:
+      - ${DB_PORT}:27017
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - monogodb-volume:/data/db
+
+volumes:
+  monogodb-volume:
